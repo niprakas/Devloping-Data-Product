@@ -1,0 +1,42 @@
+---
+title: 'Assignment: R Markdown and Leaflet'
+author: "Nikhil Prakash"
+date: "August 23, 2018"
+output: html_document
+---
+
+Below Web page created using R Markdown with with Leaflet that features a **SRM University** location on map.
+
+```{r results="hide", package_options, include=FALSE}
+library(leaflet)
+library(rmarkdown)
+```
+
+
+```{r pressure, echo=FALSE}
+#Add custom Marker
+srmIcon <- makeIcon(
+  iconUrl = "http://www.srmuniv.ac.in/sites/all/themes/srmuniversity/main_layout/images/logo.png",
+  iconWidth = 70*215/230, iconHeight = 70,
+  iconAnchorX = 70*215/230/2, iconAnchorY = 35
+)
+
+srmlatlng <- data.frame(lat = c(12.823344, 13.032620, 28.796419, 13.051995, 27.316410, 28.918798, 16.572997),
+                        lng = c(80.045787, 80.177923, 77.538312, 80.210445, 88.595833, 77.131033, 80.357511))
+
+srmsites <- c(
+  "<a href ='http://www.srmuniv.ac.in/'>Kattankulathur Campus</a>",
+  "<a href ='http://www.srmuniv.ac.in/ramapuram/'>Rampauram Campus</a>",
+  "<a href ='http://www.srmuniv.ac.in/ncr/'>NCR Campus</a>",
+  "<a href ='http://www.srmuniv.ac.in/ramapuram-part-vadapalani/'>Vadapalani Campus</a>",
+  "<a href ='http://www.srmus.ac.in/'>Sikkim Campus</a>",
+  "<a href ='http://www.srmuniversity.ac.in/'>Haryana Campus</a>",
+  "<a href ='http://srmap.edu.in/'>Amaravathi Campus</a>"
+)
+
+srmlatlng %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = srmIcon, popup = srmsites, clusterOptions = markerClusterOptions())
+```
+
